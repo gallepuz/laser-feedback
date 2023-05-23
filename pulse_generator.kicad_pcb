@@ -2102,7 +2102,7 @@
     (stroke (width 0.15) (type solid)) (fill solid) (layer "F.SilkS") (tstamp a6b6eae9-4171-42a4-ad1b-922146ccecd5))
   (gr_rect (start 115 70.5) (end 131.5 76)
     (stroke (width 0.15) (type default)) (fill none) (layer "F.SilkS") (tstamp a75e4a5f-1849-47ef-af2a-836d38c18c71))
-  (gr_rect (start 86 47.8) (end 96 54.3)
+  (gr_rect (start 86 48.05) (end 96 54.05)
     (stroke (width 0.15) (type solid)) (fill none) (layer "F.SilkS") (tstamp ae0684c7-d9a0-4a37-b0ca-f9289e09805c))
   (gr_poly
     (pts
@@ -2215,6 +2215,9 @@
   (gr_line (start 166.04 98.73) (end 166.04 99.238)
     (stroke (width 0.15) (type solid)) (layer "Edge.Cuts") (tstamp ea66c48c-ef77-4435-9521-1af21d8c2327))
   (gr_text "D3: Dialight 550-2407F \nor matching 5mm LED" (at 147 54.5) (layer "F.SilkS") (tstamp 00620330-f195-4dc1-9f1f-379ebe3c6cbb)
+    (effects (font (size 1 1) (thickness 0.15)) (justify left bottom))
+  )
+  (gr_text "CC-BY-SA 2023" (at 98 50.5) (layer "F.SilkS") (tstamp 01f9284d-2007-4fa6-b88e-b3e7f5e0bdae)
     (effects (font (size 1 1) (thickness 0.15)) (justify left bottom))
   )
   (gr_text "Output" (at 103.5 64 90) (layer "F.SilkS") (tstamp 091bfea4-b7d7-479c-bd22-48f71d5bec25)

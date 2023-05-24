@@ -181,7 +181,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "pulse_generator_endplate.kicad_pro",
+    "filename": "pulse_generator_endplate_1455NF.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -217,7 +217,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "pulse_generator_endplate_1455NF.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""

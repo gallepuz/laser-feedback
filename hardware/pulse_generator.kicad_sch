@@ -1568,6 +1568,16 @@
     (uuid fe837306-92d0-4847-ad21-76c47ae932d1)
   )
 
+  (circle (center 127 38.1) (radius 4.0161)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (uuid d094c4ab-7983-4649-abc1-3dc6333db0ec)
+  )
+
+  (text "bruh" (at 129.54 43.18 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid a46a268c-72ee-4104-a472-fd97aabc39e3)
+  )
   (text "* Indicates a PWM-capable pin" (at 92.71 118.11 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid c364973a-9a67-4667-8185-a3a5c6c6cbdf)

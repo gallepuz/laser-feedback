@@ -141,7 +141,7 @@ int main(void)
 			send_OK();
 			break;
 
-		case SET_DAC:;
+		case SET_DAC:
 			uint16_t value;
 			if (HAL_UART_Receive(&huart2, (uint8_t *) &value, 2, SERIAL_TIMEOUT) == HAL_OK) {
 				HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, value);
@@ -149,6 +149,11 @@ int main(void)
 			} else {
 				send_FAIL();
 			}
+			break;
+
+		case RST:
+			HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_SET);
 			break;
 
 		default:

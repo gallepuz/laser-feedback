@@ -43,15 +43,16 @@ extern "C" {
 /* USER CODE BEGIN EC */
 #define SERIAL_TIMEOUT 1000
 
-#define OK		0x01
-#define FAIL 	0x00
-#define UNKNOWN_COMMAND 0x03
+#define OK		0x01 // ) 0x29
+#define FAIL 	0x00 // & 0x26
+#define UNKNOWN_COMMAND 0x03 // ' 0x27
 
 // Requests
-#define CHECK 			0x00 // Send 0x01 always
+#define CHECK 			0x00 // ( 0x28 // Send 0x01 always
 #define GET_INPUT 		0x01
-#define PULSE			0x02
+#define PULSE			0x02 // * 0x2A
 #define SET_DAC			0x03 // Receive 4 bytes
+#define RST 			0x04
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

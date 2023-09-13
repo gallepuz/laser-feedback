@@ -1,0 +1,15 @@
+Comment,Designator,Footprint,JLCPCB Part #（optional）
+1N5711,"D1,D2",D_SOD-123,C727115
+DAC_cal,TP2,PinHeader_1x01_P2.54mm_Vertical,C238118
+SW_Push,SW1,SW_Tactile_SPST_Angled_PTS645Vx39-2LFS,C266195
+LED,D3,LED_D5.0mm,C3001995
+330,"R7,R4,R6",R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,C2984391
+Conn_Coaxial,"J5,J6",BNC_Amphenol_B6252HB-NPP3G-50_Horizontal,C305920
+LED,"D5,D4",LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder,C497949
+74LS279,U2,DIP-16_W7.62mm_Socket_LongPads,C3170693
+0,"R8,R9",R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,C346501
+10k,"R3,R5",R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,C84376
+LM311,U1,DIP-8_W7.62mm_Socket_LongPads,C305904
+1M,"R1,R2",R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,C479091
+GND_hook,TP1,PinHeader_1x01_P2.54mm_Vertical,C238118
+100n,"C3,C1",C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,C85866

@@ -6,7 +6,7 @@ firmware/[Dd]ebug
 firmware/.launch
 
 # KiCad
-hardware/*
-!hardware/pulse_generator.kicad_pro
-!hardware/pulse_generator.kicad_pcb
-!hardware/pulse_generator.kicad_sch
+# hardware/*
+# !hardware/pulse_generator.kicad_pro
+# !hardware/pulse_generator.kicad_pcb
+# !hardware/pulse_generator.kicad_sch

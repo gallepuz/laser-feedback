@@ -1,0 +1,29 @@
+### Footprint positions - created on Fri Jun  2 12:53:34 2023 ###
+### Printed by KiCad version 7.0.2
+## Unit = mm, Angle = deg.
+## Side : top
+# Ref     Val           Package                                             PosX       PosY       Rot  Side
+C1        100n          C_0805_2012Metric_Pad1.18x1.45mm_HandSolder      45.0000    31.0000    0.0000  top
+C3        100n          C_0805_2012Metric_Pad1.18x1.45mm_HandSolder      22.0000    20.0000  180.0000  top
+D1        1N5711        D_SOD-123                                        52.5000    13.8000   90.0000  top
+D2        1N5711        D_SOD-123                                        55.5000    17.1500   90.0000  top
+D3        LED           LED_D5.0mm                                       -8.0000    47.7000   90.0000  top
+D4        LED           LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder    -1.0000    24.0000  180.0000  top
+D5        LED           LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder    -6.0000    43.0000  180.0000  top
+J5        Conn_Coaxial  BNC_Amphenol_B6252HB-NPP3G-50_Horizontal         -0.8500     8.5000   90.0000  top
+J6        Conn_Coaxial  BNC_Amphenol_B6252HB-NPP3G-50_Horizontal         -0.9000    33.5000   90.0000  top
+R1        1M            R_0805_2012Metric_Pad1.20x1.40mm_HandSolder      48.0000    15.5000    0.0000  top
+R2        1M            R_0805_2012Metric_Pad1.20x1.40mm_HandSolder      43.5000    14.5000  -90.0000  top
+R3        10k           R_0805_2012Metric_Pad1.20x1.40mm_HandSolder      27.0000    25.5000    0.0000  top
+R4        330           R_0805_2012Metric_Pad1.20x1.40mm_HandSolder      13.0000    34.5000   90.0000  top
+R5        10k           R_0805_2012Metric_Pad1.20x1.40mm_HandSolder      27.0000    28.0000  180.0000  top
+R6        330           R_0805_2012Metric_Pad1.20x1.40mm_HandSolder       6.0000    40.0000  180.0000  top
+R7        330           R_0805_2012Metric_Pad1.20x1.40mm_HandSolder       6.0000    24.0000    0.0000  top
+R8        0             R_0805_2012Metric_Pad1.20x1.40mm_HandSolder       6.0000     6.5000    0.0000  top
+R9        0             R_0805_2012Metric_Pad1.20x1.40mm_HandSolder       6.0000    31.5000    0.0000  top
+SW1       SW_Push       SW_Tactile_SPST_Angled_PTS645Vx39-2LFS           -9.7875    18.7250   90.0000  top
+TP1       GND_hook      PinHeader_1x01_P2.54mm_Vertical                  39.0000    22.0000    0.0000  top
+TP2       DAC_cal       PinHeader_1x01_P2.54mm_Vertical                  39.0000     8.5000    0.0000  top
+U1        LM311         DIP-8_W7.62mm_Socket_LongPads                    26.0000    12.0000   90.0000  top
+U2        74LS279       DIP-16_W7.62mm_Socket_LongPads                   44.0000    42.0000  -90.0000  top
+## End

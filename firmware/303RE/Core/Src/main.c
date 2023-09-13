@@ -31,6 +31,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -39,7 +40,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-DAC_HandleTypeDef hdac;
+DAC_HandleTypeDef hdac1;
 
 UART_HandleTypeDef huart2;
 
@@ -51,7 +52,7 @@ UART_HandleTypeDef huart2;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-static void MX_DAC_Init(void);
+static void MX_DAC1_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -75,7 +76,6 @@ void send_UNKNOWN() {
 	send_buffer[0] = UNKNOWN_COMMAND;
 	HAL_UART_Transmit(&huart2, send_buffer, 1, SERIAL_TIMEOUT);
 }
-
 /* USER CODE END 0 */
 
 /**
@@ -107,11 +107,11 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
-  MX_DAC_Init();
+  MX_DAC1_Init();
   /* USER CODE BEGIN 2 */
-  HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
-  HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 0x0FFF/2);
-
+  HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
+  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 0x0FFF/2);
+  HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_SET);	//was zero at init for safety
 
   /* USER CODE END 2 */
 
@@ -123,8 +123,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	//HAL_GPIO_TogglePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin);
-
 	  if (HAL_UART_Receive(&huart2, receive_buffer, 1, SERIAL_TIMEOUT) == HAL_OK) {
 		switch (receive_buffer[0]) {
 		case CHECK:
@@ -133,18 +131,20 @@ int main(void)
 
 		case PULSE:
 			// This creates an approx 600ns pulse, enough to set the latch.
+			HAL_Delay(0);	//Wait 1ms, sync to systick, do not remove. Makes single/first pulse consistent when in failsafe
 			HAL_GPIO_WritePin(SET_GPIO_Port, SET_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(SET_GPIO_Port, SET_Pin, GPIO_PIN_SET);
-			HAL_Delay(1); // Fail safe time, if the comparator has not reset the laser output by now...
+			HAL_Delay(1); 	//2ms fail safe time, if the comparator has not reset the laser output by now...
 			HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_RESET); // ..we reset the latch
 			HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_SET);
 			send_OK();
+			HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 			break;
 
 		case SET_DAC:
 			uint16_t value;
 			if (HAL_UART_Receive(&huart2, (uint8_t *) &value, 2, SERIAL_TIMEOUT) == HAL_OK) {
-				HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, value);
+				HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, value);
 				send_OK();
 			} else {
 				send_FAIL();
@@ -173,6 +173,7 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -182,7 +183,8 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+  RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV1;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -201,30 +203,36 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2;
+  PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
 /**
-  * @brief DAC Initialization Function
+  * @brief DAC1 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_DAC_Init(void)
+static void MX_DAC1_Init(void)
 {
 
-  /* USER CODE BEGIN DAC_Init 0 */
+  /* USER CODE BEGIN DAC1_Init 0 */
 
-  /* USER CODE END DAC_Init 0 */
+  /* USER CODE END DAC1_Init 0 */
 
   DAC_ChannelConfTypeDef sConfig = {0};
 
-  /* USER CODE BEGIN DAC_Init 1 */
+  /* USER CODE BEGIN DAC1_Init 1 */
 
-  /* USER CODE END DAC_Init 1 */
+  /* USER CODE END DAC1_Init 1 */
 
   /** DAC Initialization
   */
-  hdac.Instance = DAC;
-  if (HAL_DAC_Init(&hdac) != HAL_OK)
+  hdac1.Instance = DAC1;
+  if (HAL_DAC_Init(&hdac1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -233,13 +241,13 @@ static void MX_DAC_Init(void)
   */
   sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
   sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
-  if (HAL_DAC_ConfigChannel(&hdac, &sConfig, DAC_CHANNEL_1) != HAL_OK)
+  if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_1) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN DAC_Init 2 */
+  /* USER CODE BEGIN DAC1_Init 2 */
 
-  /* USER CODE END DAC_Init 2 */
+  /* USER CODE END DAC1_Init 2 */
 
 }
 
@@ -286,6 +294,8 @@ static void MX_USART2_UART_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -294,10 +304,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOA, LD2_Pin|RESET_PULLDOWN_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(SET_GPIO_Port, SET_Pin, GPIO_PIN_SET);
@@ -319,34 +326,22 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = RESET_PULLDOWN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(RESET_PULLDOWN_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : SET_Pin */
   GPIO_InitStruct.Pin = SET_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(SET_GPIO_Port, &GPIO_InitStruct);
 
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
-
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-  if (GPIO_Pin == B1_Pin)
-  {
-    /* Toggle LED2 */
-    //HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_SET);
-    //HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_RESET);
-	//HAL_GPIO_WritePin(SET_GPIO_Port, SET_Pin, GPIO_PIN_RESET);
-	//HAL_GPIO_WritePin(SET_GPIO_Port, SET_Pin, GPIO_PIN_SET);
-  }
-}
+
 /* USER CODE END 4 */
 
 /**

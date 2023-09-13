@@ -36,11 +36,6 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
-/* USER CODE END ET */
-
-/* Exported constants --------------------------------------------------------*/
-/* USER CODE BEGIN EC */
 #define SERIAL_TIMEOUT 1000
 
 #define OK		0x01 // ) 0x29
@@ -53,6 +48,11 @@ extern "C" {
 #define PULSE			0x02 // * 0x2A
 #define SET_DAC			0x03 // Receive 4 bytes
 #define RST 			0x04
+/* USER CODE END ET */
+
+/* Exported constants --------------------------------------------------------*/
+/* USER CODE BEGIN EC */
+
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -70,13 +70,12 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define B1_Pin GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
-#define B1_EXTI_IRQn EXTI15_10_IRQn
 #define USART_TX_Pin GPIO_PIN_2
 #define USART_TX_GPIO_Port GPIOA
 #define USART_RX_Pin GPIO_PIN_3
 #define USART_RX_GPIO_Port GPIOA
-#define LD2_Pin GPIO_PIN_13
-#define LD2_GPIO_Port GPIOB
+#define LD2_Pin GPIO_PIN_5
+#define LD2_GPIO_Port GPIOA
 #define RESET_PULLDOWN_Pin GPIO_PIN_10
 #define RESET_PULLDOWN_GPIO_Port GPIOA
 #define TMS_Pin GPIO_PIN_13
@@ -87,6 +86,7 @@ void Error_Handler(void);
 #define SWO_GPIO_Port GPIOB
 #define SET_Pin GPIO_PIN_5
 #define SET_GPIO_Port GPIOB
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

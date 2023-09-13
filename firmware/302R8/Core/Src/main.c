@@ -111,7 +111,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
   HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 0x0FFF/2);
-
+  HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_SET);	//was zero at init for safety
 
   /* USER CODE END 2 */
 
@@ -123,8 +123,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	//HAL_GPIO_TogglePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin);
-
 	  if (HAL_UART_Receive(&huart2, receive_buffer, 1, SERIAL_TIMEOUT) == HAL_OK) {
 		switch (receive_buffer[0]) {
 		case CHECK:
@@ -133,12 +131,14 @@ int main(void)
 
 		case PULSE:
 			// This creates an approx 600ns pulse, enough to set the latch.
+			HAL_Delay(0);	//Wait 1ms - sync to systick, do not remove. Makes single/first pulse consistent when in failsafe
 			HAL_GPIO_WritePin(SET_GPIO_Port, SET_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(SET_GPIO_Port, SET_Pin, GPIO_PIN_SET);
-			HAL_Delay(1); // Fail safe time, if the comparator has not reset the laser output by now...
+			HAL_Delay(1); 	//2ms fail safe time, if the comparator has not reset the laser output by now...
 			HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_RESET); // ..we reset the latch
 			HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_SET);
 			send_OK();
+			HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 			break;
 
 		case SET_DAC:
@@ -152,8 +152,8 @@ int main(void)
 			break;
 
 		case RST:
-			HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(RESET_PULLDOWN_GPIO_Port, RESET_PULLDOWN_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, RESET_PULLDOWN_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOA, RESET_PULLDOWN_Pin, GPIO_PIN_SET);
 			break;
 
 		default:

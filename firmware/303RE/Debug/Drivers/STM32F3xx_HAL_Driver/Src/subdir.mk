@@ -25,27 +25,6 @@ C_SRCS += \
 ../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.c \
 ../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.c 
 
-OBJS += \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_dac.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_dac_ex.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_dma.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_exti.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_gpio.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c_ex.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr_ex.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc_ex.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.o \
-./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.o 
-
 C_DEPS += \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.d \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.d \
@@ -67,10 +46,31 @@ C_DEPS += \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.d \
 ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.d 
 
+OBJS += \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_dac.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_dac_ex.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_dma.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_exti.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_gpio.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c_ex.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr_ex.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc_ex.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.o \
+./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.o 
+
 
 # Each subdirectory must supply rules for building sources it contributes
 Drivers/STM32F3xx_HAL_Driver/Src/%.o Drivers/STM32F3xx_HAL_Driver/Src/%.su Drivers/STM32F3xx_HAL_Driver/Src/%.cyclo: ../Drivers/STM32F3xx_HAL_Driver/Src/%.c Drivers/STM32F3xx_HAL_Driver/Src/subdir.mk
-	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F302x8 -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F303xE -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 
 clean: clean-Drivers-2f-STM32F3xx_HAL_Driver-2f-Src
 

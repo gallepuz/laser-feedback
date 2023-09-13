@@ -1,5 +1,0 @@
-Ref,Val,Package,PosX,PosY,Rot,Side
-"J1","Power","PinHeader_1x08_P2.54mm_Vertical",41.440000,2.540000,-90.000000,bottom
-"J2","Digital/PWM","PinHeader_1x10_P2.54mm_Vertical",32.300000,50.800000,-90.000000,bottom
-"J3","Analog","PinHeader_1x06_P2.54mm_Vertical",64.300000,2.540000,-90.000000,bottom
-"J4","Digital/PWM","PinHeader_1x08_P2.54mm_Vertical",59.200000,50.800000,-90.000000,bottom

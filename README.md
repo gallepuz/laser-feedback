@@ -15,3 +15,4 @@ Doing both of these will float the shielding. Do it partially on one or both BNC
 ### To Do
 Trobbar un nom més sersi.
 Eventually deixar només els gerbers i un pdf de l'esquematic a la carpeta hardware.
+Relay safety logic
